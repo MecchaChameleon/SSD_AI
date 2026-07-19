@@ -1,0 +1,469 @@
+<title>제주 유동인구 기반 수요 예측 EBM 대시보드</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1:       #2a78d6; /* blue: 실제/주계열 */
+    --series-2:       #eda100; /* yellow: 예측 */
+    --pos:            #2a78d6; /* diverging + */
+    --neg:            #e34948; /* diverging - */
+    --neutral:        #f0efec;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1:       #3987e5;
+      --series-2:       #c98500;
+      --pos:            #3987e5;
+      --neg:            #e66767;
+      --neutral:        #383835;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page:           #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1:       #3987e5;
+    --series-2:       #c98500;
+    --pos:            #3987e5;
+    --neg:            #e66767;
+    --neutral:        #383835;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .viz-root {
+    background: var(--page);
+    color: var(--text-primary);
+    padding: 24px 16px 64px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .subtitle { color: var(--text-secondary); font-size: 13px; margin: 0 0 24px; }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .card h2 { font-size: 15px; margin: 0 0 2px; }
+  .card .desc { color: var(--text-secondary); font-size: 12.5px; margin: 0 0 16px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  @media (max-width: 720px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat-tile {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px;
+  }
+  .stat-tile .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+  .stat-tile .value { font-size: 26px; font-weight: 600; }
+  .stat-tile .foot { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
+
+  .legend { display: flex; gap: 16px; margin-bottom: 8px; font-size: 12.5px; color: var(--text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+  svg { display: block; overflow: visible; }
+  .tick-text { fill: var(--text-muted); font-size: 11px; }
+  .axis-line { stroke: var(--baseline); stroke-width: 1; }
+  .grid-line { stroke: var(--gridline); stroke-width: 1; }
+  .end-label { fill: var(--text-primary); font-size: 12px; font-weight: 600; }
+
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--surface-1);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    font-size: 12px; color: var(--text-primary); box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    opacity: 0; transition: opacity 0.1s; white-space: nowrap; z-index: 10;
+  }
+  .chart-holder { position: relative; }
+
+  .small-multiples { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 720px) { .small-multiples { grid-template-columns: 1fr; } }
+  .sm-card h3 { font-size: 13px; margin: 0 0 10px; color: var(--text-primary); }
+
+  details.table-view { margin-top: 12px; }
+  details.table-view summary { cursor: pointer; font-size: 12px; color: var(--text-secondary); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+  table th, table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--gridline); }
+  table td.num, table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  table th { color: var(--text-secondary); font-weight: 500; }
+</style>
+
+<div class="viz-root">
+  <div class="wrap">
+    <h1>제주 유동인구 기반 수요 예측 — EBM 모델 대시보드</h1>
+    <p class="subtitle">읍면동 × 월 단위 방문객 수 예측 · ExplainableBoostingRegressor (interactions=10) · 시계열 분할 평가</p>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="card">
+      <h2>월별 실제 vs 예측 방문객 (제주 전체 합계)</h2>
+      <p class="desc">실선은 전체 기간 실제 합계, 강조 구간(음영)이 테스트 구간이며 그 위에 예측 합계를 겹쳐 표시합니다.</p>
+      <div class="chart-holder" id="tsChart"></div>
+      <details class="table-view"><summary>표로 보기</summary><div id="tsTable"></div></details>
+    </div>
+
+    <div class="card">
+      <h2>피처 중요도 Top 12</h2>
+      <p class="desc">term_importances() 기준, 학습에 사용한 전체 피처 중 기여도가 큰 순서</p>
+      <div class="chart-holder" id="impChart"></div>
+      <details class="table-view"><summary>표로 보기</summary><div id="impTable"></div></details>
+    </div>
+
+    <div class="card">
+      <h2>주요 피처의 형태 함수 (Shape Function)</h2>
+      <p class="desc">EBM은 각 피처가 예측값에 더하는 점수를 독립적인 곡선으로 학습합니다 — 값이 커질수록 기여도가 어떻게 바뀌는지 그대로 보여줍니다.</p>
+      <div class="small-multiples" id="shapeGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2>개별 예측 기여도 분해</h2>
+      <p class="desc" id="localDesc"></p>
+      <div class="chart-holder" id="localChart"></div>
+      <details class="table-view"><summary>표로 보기</summary><div id="localTable"></div></details>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const DATA = __DASHBOARD_DATA__;
+
+const fmtInt = n => Math.round(n).toLocaleString('ko-KR');
+const fmtSigned = n => (n >= 0 ? '+' : '') + Math.round(n).toLocaleString('ko-KR');
+const fmtCompact = n => {
+  const abs = Math.abs(n);
+  if (abs >= 1e8) return (n/1e8).toFixed(1) + '억';
+  if (abs >= 1e4) return (n/1e4).toFixed(0) + '만';
+  return fmtInt(n);
+};
+
+const tooltip = document.getElementById('tooltip');
+function showTooltip(x, y, html) {
+  tooltip.innerHTML = html;
+  tooltip.style.left = (x + 14) + 'px';
+  tooltip.style.top = (y + 10) + 'px';
+  tooltip.style.opacity = 1;
+}
+function hideTooltip() { tooltip.style.opacity = 0; }
+
+function svgEl(tag, attrs) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+function niceMax(v) {
+  if (v <= 0) return 1;
+  const mag = Math.pow(10, Math.floor(Math.log10(v)));
+  const norm = v / mag;
+  let step;
+  if (norm <= 1) step = 1; else if (norm <= 2) step = 2; else if (norm <= 5) step = 5; else step = 10;
+  return step * mag;
+}
+
+// ---------------- Stat tiles ----------------
+function renderStats() {
+  const m = DATA.metrics;
+  const tiles = [
+    { label: 'MAE (평균절대오차)', value: fmtCompact(m.mae) + '명', foot: '테스트 구간' },
+    { label: 'MAPE', value: m.mape.toFixed(2) + '%', foot: '테스트 구간' },
+    { label: 'R²', value: m.r2.toFixed(4), foot: '테스트 구간' },
+    { label: '학습 데이터', value: m.n_rows + '행', foot: `train ${m.train_months[0]}~${m.train_months[1]} · test ${m.test_months[0]}~${m.test_months[1]}` },
+  ];
+  const grid = document.getElementById('statGrid');
+  tiles.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'stat-tile';
+    div.innerHTML = `<div class="label">${t.label}</div><div class="value">${t.value}</div><div class="foot">${t.foot}</div>`;
+    grid.appendChild(div);
+  });
+}
+
+// ---------------- Line chart (actual vs predicted) ----------------
+function renderTimeseries() {
+  const ts = DATA.timeseries;
+  const holder = document.getElementById('tsChart');
+  const width = holder.clientWidth || 1000;
+  const height = 320;
+  const margin = { top: 16, right: 16, bottom: 32, left: 56 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  const legend = document.createElement('div');
+  legend.className = 'legend';
+  legend.innerHTML = `
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--series-1)"></span>실제</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--series-2)"></span>예측(테스트 구간)</div>`;
+  holder.appendChild(legend);
+
+  const svg = svgEl('svg', { width, height });
+  holder.appendChild(svg);
+
+  const allVals = ts.actual.concat(ts.predicted);
+  const yMax = niceMax(Math.max(...allVals) * 1.1);
+  const yScale = v => innerH - (v / yMax) * innerH;
+  const xScale = i => (i / (ts.months.length - 1)) * innerW;
+
+  const g = svgEl('g', { transform: `translate(${margin.left},${margin.top})` });
+  svg.appendChild(g);
+
+  // test-region shading
+  const testStartIdx = ts.months.indexOf(ts.test_months[0]);
+  const shadeX = xScale(testStartIdx);
+  g.appendChild(svgEl('rect', { x: shadeX, y: 0, width: innerW - shadeX, height: innerH, fill: 'var(--neutral)', opacity: 0.5 }));
+
+  // gridlines + y ticks
+  const ticks = 4;
+  for (let i = 0; i <= ticks; i++) {
+    const v = (yMax / ticks) * i;
+    const y = yScale(v);
+    g.appendChild(svgEl('line', { x1: 0, x2: innerW, y1: y, y2: y, class: 'grid-line' }));
+    const t = svgEl('text', { x: -8, y: y + 4, class: 'tick-text', 'text-anchor': 'end' });
+    t.textContent = fmtCompact(v);
+    g.appendChild(t);
+  }
+  g.appendChild(svgEl('line', { x1: 0, x2: innerW, y1: innerH, y2: innerH, class: 'axis-line' }));
+
+  // x labels (every other month)
+  ts.months.forEach((mm, i) => {
+    if (i % 2 !== 0 && i !== ts.months.length - 1) return;
+    const t = svgEl('text', { x: xScale(i), y: innerH + 20, class: 'tick-text', 'text-anchor': 'middle' });
+    t.textContent = mm.slice(2, 4) + '.' + mm.slice(4, 6);
+    g.appendChild(t);
+  });
+
+  function linePath(values, offset) {
+    return values.map((v, i) => `${i === 0 ? 'M' : 'L'} ${xScale(i + offset)} ${yScale(v)}`).join(' ');
+  }
+
+  // actual line (full range)
+  g.appendChild(svgEl('path', { d: linePath(ts.actual, 0), fill: 'none', stroke: 'var(--series-1)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+
+  // predicted line (test range only)
+  const predOffset = testStartIdx;
+  g.appendChild(svgEl('path', { d: linePath(ts.predicted, predOffset), fill: 'none', stroke: 'var(--series-2)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+
+  // end markers
+  const lastActual = ts.actual[ts.actual.length - 1];
+  g.appendChild(svgEl('circle', { cx: xScale(ts.months.length - 1), cy: yScale(lastActual), r: 4, fill: 'var(--series-1)', stroke: 'var(--surface-1)', 'stroke-width': 2 }));
+  const lastPred = ts.predicted[ts.predicted.length - 1];
+  g.appendChild(svgEl('circle', { cx: xScale(ts.months.length - 1), cy: yScale(lastPred), r: 4, fill: 'var(--series-2)', stroke: 'var(--surface-1)', 'stroke-width': 2 }));
+
+  // hover layer
+  const hoverLine = svgEl('line', { x1: 0, x2: 0, y1: 0, y2: innerH, class: 'grid-line', opacity: 0 });
+  g.appendChild(hoverLine);
+  const hitRect = svgEl('rect', { x: 0, y: 0, width: innerW, height: innerH, fill: 'transparent' });
+  g.appendChild(hitRect);
+  hitRect.addEventListener('mousemove', (e) => {
+    const rect = svg.getBoundingClientRect();
+    const mx = e.clientX - rect.left - margin.left;
+    const i = Math.max(0, Math.min(ts.months.length - 1, Math.round((mx / innerW) * (ts.months.length - 1))));
+    hoverLine.setAttribute('x1', xScale(i)); hoverLine.setAttribute('x2', xScale(i)); hoverLine.setAttribute('opacity', 1);
+    const mm = ts.months[i];
+    let html = `<b>${mm}</b><br>실제: ${fmtInt(ts.actual[i])}명`;
+    const predIdx = i - predOffset;
+    if (predIdx >= 0 && predIdx < ts.predicted.length) html += `<br>예측: ${fmtInt(ts.predicted[predIdx])}명`;
+    showTooltip(e.clientX, e.clientY, html);
+  });
+  hitRect.addEventListener('mouseleave', () => { hoverLine.setAttribute('opacity', 0); hideTooltip(); });
+
+  // table view (relief for low-contrast predicted-series yellow)
+  const tbl = document.createElement('table');
+  const predByMonth = {};
+  ts.test_months.forEach((mm, i) => { predByMonth[mm] = ts.predicted[i]; });
+  tbl.innerHTML = '<thead><tr><th>월</th><th class="num">실제</th><th class="num">예측</th></tr></thead>' +
+    '<tbody>' + ts.months.map((mm, i) => `<tr><td>${mm}</td><td class="num">${fmtInt(ts.actual[i])}</td><td class="num">${mm in predByMonth ? fmtInt(predByMonth[mm]) : '-'}</td></tr>`).join('') + '</tbody>';
+  document.getElementById('tsTable').appendChild(tbl);
+}
+
+// ---------------- Horizontal bar chart (feature importance) ----------------
+function renderImportance() {
+  const items = DATA.feature_importance;
+  const holder = document.getElementById('impChart');
+  const width = holder.clientWidth || 1000;
+  const rowH = 28;
+  const margin = { top: 4, right: 60, bottom: 4, left: 180 };
+  const innerW = width - margin.left - margin.right;
+  const height = items.length * rowH + margin.top + margin.bottom;
+
+  const svg = svgEl('svg', { width, height });
+  holder.appendChild(svg);
+  const g = svgEl('g', { transform: `translate(${margin.left},${margin.top})` });
+  svg.appendChild(g);
+
+  const maxV = Math.max(...items.map(d => d.importance));
+  const xScale = v => (v / maxV) * innerW;
+
+  items.forEach((d, i) => {
+    const y = i * rowH;
+    const label = svgEl('text', { x: -10, y: y + rowH / 2 + 4, class: 'tick-text', 'text-anchor': 'end' });
+    label.textContent = d.label;
+    g.appendChild(label);
+
+    const barW = Math.max(2, xScale(d.importance));
+    const bar = svgEl('rect', { x: 0, y: y + 4, width: barW, height: 18, rx: 4, fill: 'var(--series-1)' });
+    g.appendChild(bar);
+    bar.addEventListener('mousemove', (e) => showTooltip(e.clientX, e.clientY, `<b>${d.label}</b><br>중요도: ${d.importance.toFixed(1)}`));
+    bar.addEventListener('mouseleave', hideTooltip);
+
+    const val = svgEl('text', { x: barW + 8, y: y + rowH / 2 + 4, class: 'tick-text' });
+    val.textContent = d.importance.toFixed(0);
+    g.appendChild(val);
+  });
+
+  const tbl = document.createElement('table');
+  tbl.innerHTML = '<thead><tr><th>피처</th><th class="num">중요도</th></tr></thead>' +
+    '<tbody>' + items.map(d => `<tr><td>${d.label}</td><td class="num">${d.importance.toFixed(2)}</td></tr>`).join('') + '</tbody>';
+  document.getElementById('impTable').appendChild(tbl);
+}
+
+// ---------------- Small multiples: shape functions ----------------
+function renderShapeFunctions() {
+  const grid = document.getElementById('shapeGrid');
+  DATA.shape_functions.forEach(sf => {
+    const card = document.createElement('div');
+    card.className = 'sm-card';
+    card.innerHTML = `<h3>${sf.label}</h3>`;
+    grid.appendChild(card);
+
+    const holder = document.createElement('div');
+    holder.className = 'chart-holder';
+    card.appendChild(holder);
+
+    const width = 480, height = 200;
+    const margin = { top: 10, right: 10, bottom: 24, left: 56 };
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+
+    const svg = svgEl('svg', { width: '100%', height, viewBox: `0 0 ${width} ${height}` });
+    holder.appendChild(svg);
+    const g = svgEl('g', { transform: `translate(${margin.left},${margin.top})` });
+    svg.appendChild(g);
+
+    const xMin = Math.min(...sf.x), xMax = Math.max(...sf.x);
+    const yMin = Math.min(...sf.y, 0), yMax = Math.max(...sf.y, 0);
+    const xScale = v => ((v - xMin) / (xMax - xMin || 1)) * innerW;
+    const yScale = v => innerH - ((v - yMin) / (yMax - yMin || 1)) * innerH;
+
+    g.appendChild(svgEl('line', { x1: 0, x2: innerW, y1: yScale(0), y2: yScale(0), class: 'grid-line' }));
+    g.appendChild(svgEl('line', { x1: 0, x2: innerW, y1: innerH, y2: innerH, class: 'axis-line' }));
+
+    [yMin, yMax].forEach(v => {
+      const t = svgEl('text', { x: -8, y: yScale(v) + 4, class: 'tick-text', 'text-anchor': 'end' });
+      t.textContent = fmtCompact(v);
+      g.appendChild(t);
+    });
+    [xMin, xMax].forEach(v => {
+      const t = svgEl('text', { x: xScale(v), y: innerH + 16, class: 'tick-text', 'text-anchor': 'middle' });
+      t.textContent = fmtCompact(v);
+      g.appendChild(t);
+    });
+
+    const areaD = `M ${xScale(sf.x[0])} ${yScale(0)} ` +
+      sf.x.map((x, i) => `L ${xScale(x)} ${yScale(sf.y[i])}`).join(' ') +
+      ` L ${xScale(sf.x[sf.x.length - 1])} ${yScale(0)} Z`;
+    g.appendChild(svgEl('path', { d: areaD, fill: 'var(--series-1)', opacity: 0.10, stroke: 'none' }));
+
+    const lineD = sf.x.map((x, i) => `${i === 0 ? 'M' : 'L'} ${xScale(x)} ${yScale(sf.y[i])}`).join(' ');
+    g.appendChild(svgEl('path', { d: lineD, fill: 'none', stroke: 'var(--series-1)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+
+    const hoverLine = svgEl('line', { x1: 0, x2: 0, y1: 0, y2: innerH, class: 'grid-line', opacity: 0 });
+    g.appendChild(hoverLine);
+    const hitRect = svgEl('rect', { x: 0, y: 0, width: innerW, height: innerH, fill: 'transparent' });
+    g.appendChild(hitRect);
+    hitRect.addEventListener('mousemove', (e) => {
+      const rect = svg.getBoundingClientRect();
+      const scaleX = width / rect.width;
+      const mx = (e.clientX - rect.left) * scaleX - margin.left;
+      const vx = xMin + (mx / innerW) * (xMax - xMin);
+      let nearest = 0, best = Infinity;
+      sf.x.forEach((x, i) => { const dist = Math.abs(x - vx); if (dist < best) { best = dist; nearest = i; } });
+      hoverLine.setAttribute('x1', xScale(sf.x[nearest])); hoverLine.setAttribute('x2', xScale(sf.x[nearest])); hoverLine.setAttribute('opacity', 1);
+      showTooltip(e.clientX, e.clientY, `값: ${fmtCompact(sf.x[nearest])}<br>기여도: ${fmtSigned(sf.y[nearest])}`);
+    });
+    hitRect.addEventListener('mouseleave', () => { hoverLine.setAttribute('opacity', 0); hideTooltip(); });
+  });
+}
+
+// ---------------- Diverging bar chart (local explanation) ----------------
+function renderLocalExplanation() {
+  const le = DATA.local_explanation;
+  document.getElementById('localDesc').textContent =
+    `대상: ${le.region} · ${le.yyyymm} — 실제값 ${fmtInt(le.actual)}명, 예측값 ${fmtInt(le.predicted)}명. 각 피처가 예측값에 더하거나(파랑) 뺀(빨강) 점수.`;
+
+  const items = le.contributions;
+  const holder = document.getElementById('localChart');
+  const width = holder.clientWidth || 1000;
+  const rowH = 28;
+  const margin = { top: 4, right: 70, bottom: 4, left: 180 };
+  const innerW = width - margin.left - margin.right;
+  const height = items.length * rowH + margin.top + margin.bottom;
+
+  const svg = svgEl('svg', { width, height });
+  holder.appendChild(svg);
+  const g = svgEl('g', { transform: `translate(${margin.left},${margin.top})` });
+  svg.appendChild(g);
+
+  const maxAbs = Math.max(...items.map(d => Math.abs(d.value)));
+  const half = innerW / 2;
+  const xScale = v => half + (v / maxAbs) * half;
+
+  g.appendChild(svgEl('line', { x1: half, x2: half, y1: 0, y2: items.length * rowH, class: 'axis-line' }));
+
+  items.forEach((d, i) => {
+    const y = i * rowH;
+    const label = svgEl('text', { x: -10, y: y + rowH / 2 + 4, class: 'tick-text', 'text-anchor': 'end' });
+    label.textContent = d.label;
+    g.appendChild(label);
+
+    const isPos = d.value >= 0;
+    const x0 = isPos ? half : xScale(d.value);
+    const barW = Math.max(2, Math.abs(xScale(d.value) - half));
+    const bar = svgEl('rect', { x: x0, y: y + 4, width: barW, height: 18, rx: 4, fill: isPos ? 'var(--pos)' : 'var(--neg)' });
+    g.appendChild(bar);
+    bar.addEventListener('mousemove', (e) => showTooltip(e.clientX, e.clientY, `<b>${d.label}</b><br>기여도: ${fmtSigned(d.value)}`));
+    bar.addEventListener('mouseleave', hideTooltip);
+
+    const val = svgEl('text', { x: isPos ? x0 + barW + 6 : x0 - barW - 6, y: y + rowH / 2 + 4, class: 'tick-text', 'text-anchor': isPos ? 'start' : 'end' });
+    val.textContent = fmtSigned(d.value);
+    g.appendChild(val);
+  });
+
+  const tbl = document.createElement('table');
+  tbl.innerHTML = '<thead><tr><th>피처</th><th class="num">기여도</th></tr></thead>' +
+    '<tbody>' + items.map(d => `<tr><td>${d.label}</td><td class="num">${fmtSigned(d.value)}</td></tr>`).join('') + '</tbody>';
+  document.getElementById('localTable').appendChild(tbl);
+}
+
+renderStats();
+renderTimeseries();
+renderImportance();
+renderShapeFunctions();
+renderLocalExplanation();
+</script>

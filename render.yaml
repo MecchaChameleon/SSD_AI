@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: jeju-localtime-ai
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      # BE 워크스페이스에도 같은 값을 입력한다.
+      - key: AI_SERVICE_API_KEY
+        sync: false
+      # 기상청 초단기실황/예보 조회용 공공데이터포털 키
+      - key: DATA_GO_KR_KEY
+        sync: false
+      # 주소에 읍면동이 없을 때 좌표를 행정동으로 변환한다.
+      - key: KAKAO_REST_API_KEY
+        sync: false

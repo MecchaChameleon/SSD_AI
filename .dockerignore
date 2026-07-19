@@ -1,0 +1,29 @@
+.env
+.git
+.github
+.pytest_cache
+.python
+.runtime
+__pycache__
+*.py[cod]
+*.log
+
+# Training and local analysis files are not needed by the inference API.
+data
+docs
+scratch
+tests
+tools
+OBS_ASOS_TIM_*.csv
+dashboard.html
+dashboard_data.json
+dashboard_template.html
+build_dashboard.py
+jeju_ebm_demand.py
+requirements-train.txt
+start_ai_tunnel.cmd
+start_ai_tunnel.ps1
+train_daily_flow_ebm.py
+입도 관광객 추이(일별).csv
+제주 지역별 방문객.csv
+제주도방문내국인유동인구추이.csv

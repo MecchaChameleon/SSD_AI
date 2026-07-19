@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+data/raw/
+__pycache__/
+*.pyc
+.python/
+.pytest_cache/
+.runtime/
+tools/cloudflared.exe

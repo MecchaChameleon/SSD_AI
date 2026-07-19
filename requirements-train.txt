@@ -1,0 +1,6 @@
+-r requirements.txt
+pandas==2.3.1
+interpret==0.7.2
+joblib==1.5.1
+holidays==0.76
+python-dotenv==1.1.1

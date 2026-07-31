@@ -33,6 +33,14 @@ def test_recommendation_is_bounded_and_explained():
     demand = next(item for item in result.explanations if item.feature == "demand_percentile")
     assert demand.displayValue is None
     assert result.reason == ""
+    assert [option.purpose for option in result.priceOptions] == ["PROFIT", "BALANCED", "SELL_THROUGH"]
+    profit, balanced, sell_through = result.priceOptions
+    assert profit.price >= balanced.price >= sell_through.price
+    assert balanced.price == result.currentPrice
+    assert profit.salesLikelihoodIndex <= balanced.salesLikelihoodIndex <= sell_through.salesLikelihoodIndex
+    assert all(request.minimumPrice <= option.price <= request.originalPrice for option in result.priceOptions)
+    assert all(option.expectedRevenue >= 0 for option in result.priceOptions)
+    assert all(option.majorFactors for option in result.priceOptions)
 
 
 def test_policy_discount_reaches_configured_floor_and_ceiling():

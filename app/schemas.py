@@ -59,6 +59,16 @@ class RegionalDemandDetails(BaseModel):
     trainingEndDate: Optional[str] = None
 
 
+class PriceOption(BaseModel):
+    purpose: str
+    label: str
+    price: int
+    discountPct: float
+    salesLikelihoodIndex: int
+    expectedRevenue: int
+    majorFactors: List[str]
+
+
 class PricingResponse(BaseModel):
     currentPrice: int
     discountPct: float
@@ -72,6 +82,7 @@ class PricingResponse(BaseModel):
     weatherSummary: str
     weather: WeatherDetails
     regionalDemand: RegionalDemandDetails
+    priceOptions: List[PriceOption]
 
 
 class StrategyRequest(BaseModel):

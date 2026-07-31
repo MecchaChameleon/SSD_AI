@@ -7,7 +7,7 @@ from typing import Dict, Tuple
 import numpy as np
 
 from .demand import DemandContext, RegionalDemandProvider
-from .schemas import PriceExplanation, PricePoint, PricingRequest, PricingResponse, RegionalDemandDetails, WeatherDetails
+from .schemas import PriceExplanation, PriceOption, PricePoint, PricingRequest, PricingResponse, RegionalDemandDetails, WeatherDetails
 from .weather import WeatherContext
 
 
@@ -140,6 +140,7 @@ class PricingEngine:
             if point_time >= request.deadline:
                 break
         confidence = 0.86 if demand_context.source == "DAILY_FLOW_EBM_3Y" and request.totalQty > 0 else 0.72
+        options = self._price_options(request, recommended, values, explanations)
         return PricingResponse(
             currentPrice=recommended,
             discountPct=round((1 - recommended / request.originalPrice) * 100, 1),
@@ -170,4 +171,51 @@ class PricingEngine:
                 trainingStartDate=demand_context.training_start_date,
                 trainingEndDate=demand_context.training_end_date,
             ),
+            priceOptions=options,
         )
+
+    def _price_options(
+        self,
+        request: PricingRequest,
+        balanced_price: int,
+        values: Dict[str, float],
+        explanations: list[PriceExplanation],
+    ) -> list[PriceOption]:
+        """균형 추천가를 중심으로 목적별 가격안과 비확률성 판매 지수를 만든다."""
+        upper_gap = max(0, request.originalPrice - balanced_price)
+        lower_gap = max(0, balanced_price - request.minimumPrice)
+        profit_price = self._rounded_price(request, balanced_price + upper_gap * 0.45)
+        sell_price = self._rounded_price(request, balanced_price - lower_gap * 0.45)
+
+        # 판매 가능성은 학습된 확률이 아니라 가격·수요·재고·시간 압력을 합친 0~100 추정 지수다.
+        urgency = float(values["elapsed_ratio"])
+        inventory = float(values["remaining_ratio"])
+        demand = float(values["demand_percentile"])
+
+        def likelihood(price: int) -> int:
+            range_size = max(1, request.originalPrice - request.minimumPrice)
+            price_discount_position = (request.originalPrice - price) / range_size
+            score = 24 + demand * 25 + inventory * 16 + urgency * 18 + price_discount_position * 27
+            return int(round(np.clip(score, 5, 95)))
+
+        common_factors = [
+            item.displayValue or item.label
+            for item in sorted(explanations, key=lambda item: abs(item.impact), reverse=True)[:2]
+        ]
+        definitions = [
+            ("PROFIT", "수익 우선", profit_price, "가격을 높여 건당 매출 확보를 우선"),
+            ("BALANCED", "균형", balanced_price, "판매 가능성과 건당 매출의 균형"),
+            ("SELL_THROUGH", "판매 우선", sell_price, "마감 전 잔여 수량 소진을 우선"),
+        ]
+        return [
+            PriceOption(
+                purpose=purpose,
+                label=label,
+                price=price,
+                discountPct=round((1 - price / request.originalPrice) * 100, 1),
+                salesLikelihoodIndex=likelihood(price),
+                expectedRevenue=int(round(price * request.remainingQty * likelihood(price) / 100.0)),
+                majorFactors=[purpose_factor, *common_factors],
+            )
+            for purpose, label, price, purpose_factor in definitions
+        ]

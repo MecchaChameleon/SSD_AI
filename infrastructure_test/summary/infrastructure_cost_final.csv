@@ -1,0 +1,4 @@
+﻿year,render_backend_usd_month,render_ai_usd_month,postgres_usd_month,s3_storage_usd_month,s3_requests_usd_month,s3_transfer_usd_month,gpt_usd_month,total_usd_month,total_krw_month,total_usd_year,total_krw_year,current_free_configuration_usd_month,pricing_basis
+1,7.0,7.0,6.0,0.000334,0.023611,0.0,0.0126,20.036545,27056,240.438539,324676,0,recommended paid minimum: two Render Starter + Render PostgreSQL Basic-256mb
+2,7.0,7.0,6.0,0.002002,0.094446,0.0,0.0504,20.146847,27205,241.762168,326464,0,recommended paid minimum: two Render Starter + Render PostgreSQL Basic-256mb
+3,7.0,7.0,6.0,0.00734,0.283337,0.0,0.1512,20.441876,27604,245.302518,331244,0,recommended paid minimum: two Render Starter + Render PostgreSQL Basic-256mb

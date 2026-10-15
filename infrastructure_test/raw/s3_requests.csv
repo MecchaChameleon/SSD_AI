@@ -1,0 +1,11 @@
+﻿timestamp_utc,operation,asset_kind,host,status,bytes,latency_ms,error
+2026-09-05T17:35:03.026235+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,283496,414.632,
+2026-09-05T17:35:03.441178+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,33657,282.619,
+2026-09-05T17:35:03.723908+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,19896,184.795,
+2026-09-05T17:35:03.907898+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,151486,238.662,
+2026-09-05T17:35:04.147101+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,116658,361.154,
+2026-09-05T17:35:04.508768+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,160943,265.329,
+2026-09-05T17:35:04.773966+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,109268,167.789,
+2026-09-05T17:35:04.942004+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,216562,349.069,
+2026-09-05T17:35:05.290161+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,22652,173.126,
+2026-09-05T17:35:05.463767+00:00,GET,non_s3_public_asset,ssd-be.onrender.com,200,93738,266.22,

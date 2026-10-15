@@ -1,0 +1,4 @@
+﻿action,test_no,operation,host,status,download_bytes,download_mb,latency_ms,object_mutated,measured_at_utc,evidence
+existing_product_image_get,1,GET,ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com,200,47764,0.045551,147.087,False,2026-09-05T17:36:46.963793+00:00,A. direct GET of previously observed existing object
+existing_product_image_get,2,GET,ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com,200,47764,0.045551,41.295,False,2026-09-05T17:36:47.005552+00:00,A. direct GET of previously observed existing object
+existing_product_image_get,3,GET,ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com,200,47764,0.045551,55.989,False,2026-09-05T17:36:47.061216+00:00,A. direct GET of previously observed existing object

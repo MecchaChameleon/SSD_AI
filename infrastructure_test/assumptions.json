@@ -1,0 +1,35 @@
+{
+  "request_mix": {
+    "general_read": 0.9899,
+    "purchase": 0.01,
+    "gpt_feature": 0.0001
+  },
+  "general_read_mix": {
+    "products": 0.40,
+    "product_detail": 0.25,
+    "products_map": 0.15,
+    "buyer_purchases": 0.10,
+    "seller_products": 0.10
+  },
+  "years": [
+    {"year": 1, "stores": 25, "buyers": 600, "cases": 900},
+    {"year": 2, "stores": 100, "buyers": 2400, "cases": 3600},
+    {"year": 3, "stores": 300, "buyers": 7200, "cases": 10800}
+  ],
+  "active_hours_per_day": 16,
+  "busy_to_active_average_factor": 3,
+  "peak_to_active_average_factor": 10,
+  "average_user_request_interval_seconds": 3,
+  "gpt_output_tokens_per_call": 500,
+  "products_created_per_store_per_year": 12,
+  "images_per_product": 2,
+  "average_image_upload_bytes": 500000,
+  "estimated_purchase_db_growth_bytes": 1500,
+  "notes": {
+    "request_mix": "사용자 지정 비율(C)",
+    "general_read_mix": "기존 concurrent_users_load_test.py 설계 재사용(C); 운영 로그로 검증 필요",
+    "peak_factors": "사업 가정(C); 실제 시간대별 로그로 교체 필요",
+    "s3_upload": "사업 가정(C); 상품 등록 빈도와 실제 업로드 파일 크기로 교체 필요",
+    "db_growth": "사업 가정(C); 운영 DB 통계 권한 확보 후 교체 필요"
+  }
+}

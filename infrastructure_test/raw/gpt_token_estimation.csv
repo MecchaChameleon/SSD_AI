@@ -1,0 +1,4 @@
+﻿example,input_type,input_tokens,output_tokens,actual_api_calls,method,evidence
+1,짧은 요청,3850,500,0,characters/4 approximation over code-built prompt and candidate payload,C. token estimate; OpenAI API not called
+2,표준 요청,4000,500,0,characters/4 approximation over code-built prompt and candidate payload,C. token estimate; OpenAI API not called
+3,상세 요청,4150,500,0,characters/4 approximation over code-built prompt and candidate payload,C. token estimate; OpenAI API not called

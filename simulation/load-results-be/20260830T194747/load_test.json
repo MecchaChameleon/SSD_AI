@@ -1,0 +1,65 @@
+{
+  "base_url": "https://ssd-be.onrender.com",
+  "endpoint": "/actuator/health",
+  "stages": [
+    {
+      "concurrency": 1,
+      "requests": 50,
+      "elapsed_seconds": 10.468284799950197,
+      "throughput_rps": 4.7763316489285685,
+      "success_rate": 1.0,
+      "latency_avg_ms": 209.29298599716276,
+      "latency_p50_ms": 204.7361999284476,
+      "latency_p95_ms": 261.70190004631877,
+      "latency_p99_ms": 446.551299886778,
+      "statuses": {
+        "200": 50
+      }
+    },
+    {
+      "concurrency": 3,
+      "requests": 50,
+      "elapsed_seconds": 3.092740499880165,
+      "throughput_rps": 16.16689146791894,
+      "success_rate": 1.0,
+      "latency_avg_ms": 184.92059600073844,
+      "latency_p50_ms": 157.83399995416403,
+      "latency_p95_ms": 316.64550001733005,
+      "latency_p99_ms": 437.6026999671012,
+      "statuses": {
+        "200": 50
+      }
+    },
+    {
+      "concurrency": 5,
+      "requests": 50,
+      "elapsed_seconds": 1.7333118999376893,
+      "throughput_rps": 28.84651054538854,
+      "success_rate": 1.0,
+      "latency_avg_ms": 169.43982999306172,
+      "latency_p50_ms": 152.58300001733005,
+      "latency_p95_ms": 264.7617000620812,
+      "latency_p99_ms": 343.7709999270737,
+      "statuses": {
+        "200": 50
+      }
+    },
+    {
+      "concurrency": 10,
+      "requests": 50,
+      "elapsed_seconds": 1.21547169983387,
+      "throughput_rps": 41.136293018450345,
+      "success_rate": 1.0,
+      "latency_avg_ms": 192.97175799496472,
+      "latency_p50_ms": 151.96090005338192,
+      "latency_p95_ms": 349.4164999574423,
+      "latency_p99_ms": 494.75089996121824,
+      "statuses": {
+        "200": 50
+      }
+    }
+  ],
+  "capacity_rule": "Highest stage with success_rate >= 0.99 and p95 <= target_p95_ms",
+  "target_p95_ms": 1000.0,
+  "estimated_safe_concurrency": 10
+}

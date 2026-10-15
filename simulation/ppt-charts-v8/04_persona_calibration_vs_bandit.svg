@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#FFFFFF"/>
+  <text x="80" y="70" font-family="Malgun Gothic,Arial,sans-serif" font-size="38" font-weight="700" fill="#0F172A">운영 정책: 페르소나 보정 규칙</text>
+  <text x="80" y="111" font-family="Malgun Gothic,Arial,sans-serif" font-size="22" fill="#475569">LinUCB는 성능 비교 기준 · 균형형 LinUCB=100 · 동일 시간순 홀드아웃 평가</text>
+
+  <rect x="820" y="137" width="18" height="18" rx="3" fill="#94A3B8"/>
+  <text x="848" y="154" font-family="Malgun Gothic,Arial,sans-serif" font-size="19" fill="#334155">기존 규칙</text>
+  <rect x="985" y="137" width="18" height="18" rx="3" fill="#2563EB"/>
+  <text x="1013" y="154" font-family="Malgun Gothic,Arial,sans-serif" font-size="19" font-weight="700" fill="#1D4ED8">페르소나 보정 규칙(운영)</text>
+  <rect x="1270" y="137" width="18" height="18" rx="3" fill="#F97316"/>
+  <text x="1298" y="154" font-family="Malgun Gothic,Arial,sans-serif" font-size="19" fill="#334155">LinUCB (학습형 비교모델)</text>
+
+  <line x1="125" y1="690" x2="1515" y2="690" stroke="#CBD5E1" stroke-width="2"/>
+  <line x1="125" y1="570" x2="1515" y2="570" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="125" y1="450" x2="1515" y2="450" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="125" y1="330" x2="1515" y2="330" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="125" y1="210" x2="1515" y2="210" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="105" y="697" text-anchor="end" font-family="Arial,sans-serif" font-size="18" fill="#64748B">0</text>
+  <text x="105" y="577" text-anchor="end" font-family="Arial,sans-serif" font-size="18" fill="#64748B">25</text>
+  <text x="105" y="457" text-anchor="end" font-family="Arial,sans-serif" font-size="18" fill="#64748B">50</text>
+  <text x="105" y="337" text-anchor="end" font-family="Arial,sans-serif" font-size="18" fill="#64748B">75</text>
+  <text x="105" y="217" text-anchor="end" font-family="Arial,sans-serif" font-size="18" fill="#64748B">100</text>
+
+  <!-- Revenue: 97.7, 99.5, 100 -->
+  <rect x="250" y="221.0" width="82" height="469.0" rx="6" fill="#94A3B8"/>
+  <rect x="345" y="212.4" width="82" height="477.6" rx="6" fill="#2563EB"/>
+  <rect x="440" y="210" width="82" height="480" rx="6" fill="#F97316"/>
+  <text x="291" y="204" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#475569">97.7</text>
+  <text x="386" y="195" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#1D4ED8">99.5</text>
+  <text x="481" y="193" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#EA580C">100</text>
+  <text x="386" y="736" text-anchor="middle" font-family="Malgun Gothic,Arial,sans-serif" font-size="25" font-weight="700" fill="#0F172A">매출</text>
+
+  <!-- Net profit: 96.3, 99.2, 100 -->
+  <rect x="705" y="227.8" width="82" height="462.2" rx="6" fill="#94A3B8"/>
+  <rect x="800" y="213.8" width="82" height="476.2" rx="6" fill="#2563EB"/>
+  <rect x="895" y="210" width="82" height="480" rx="6" fill="#F97316"/>
+  <text x="746" y="211" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#475569">96.3</text>
+  <text x="841" y="197" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#1D4ED8">99.2</text>
+  <text x="936" y="193" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#EA580C">100</text>
+  <text x="841" y="736" text-anchor="middle" font-family="Malgun Gothic,Arial,sans-serif" font-size="25" font-weight="700" fill="#0F172A">폐기 반영 순이익</text>
+
+  <!-- Sell-through: 84.7, 94.3, 100 -->
+  <rect x="1160" y="283.4" width="82" height="406.6" rx="6" fill="#94A3B8"/>
+  <rect x="1255" y="237.4" width="82" height="452.6" rx="6" fill="#2563EB"/>
+  <rect x="1350" y="210" width="82" height="480" rx="6" fill="#F97316"/>
+  <text x="1201" y="266" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#475569">84.7</text>
+  <text x="1296" y="220" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#1D4ED8">94.3</text>
+  <text x="1391" y="193" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#EA580C">100</text>
+  <text x="1296" y="736" text-anchor="middle" font-family="Malgun Gothic,Arial,sans-serif" font-size="25" font-weight="700" fill="#0F172A">재고 소진율</text>
+
+  <rect x="95" y="782" width="1410" height="76" rx="12" fill="#EFF6FF"/>
+  <text x="120" y="815" font-family="Malgun Gothic,Arial,sans-serif" font-size="21" fill="#1E3A8A">페르소나 보정 규칙은 학습형 LinUCB 대비 매출 99.5%, 폐기 반영 순이익 99.2% 수준을 유지하면서 재고 소진율을 개선</text>
+  <text x="120" y="842" font-family="Malgun Gothic,Arial,sans-serif" font-size="17" fill="#475569">기존 규칙 대비 매출 +1.81% · 폐기 반영 순이익 +2.97% · 재고 소진율 +7.68% · 전환율 +8.92%</text>
+</svg>

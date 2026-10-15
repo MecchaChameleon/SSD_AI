@@ -1,0 +1,123 @@
+{
+  "executed_at_utc": "2026-08-31T05:52:21.678932+00:00",
+  "base_url": "https://ssd-be.onrender.com",
+  "scenario": "mixed",
+  "purchase_ratio": 0.05,
+  "duration_seconds_per_stage": 20.0,
+  "think_time_seconds": [
+    0.5,
+    1.5
+  ],
+  "stop_rules": {
+    "minimum_success_rate": 0.99,
+    "maximum_p95_ms": 3000
+  },
+  "recovery_health_status": 200,
+  "recovery_health_latency_ms": 159.4,
+  "stages": [
+    {
+      "concurrent_users": 75,
+      "requests": 780,
+      "elapsed_seconds": 22.243,
+      "throughput_rps": 35.07,
+      "success_rate": 1.0,
+      "latency_avg_ms": 993.98,
+      "latency_p50_ms": 720.56,
+      "latency_p95_ms": 2805.34,
+      "latency_p99_ms": 4301.41,
+      "statuses": {
+        "200": 780
+      },
+      "endpoints": {
+        "products": {
+          "requests": 316,
+          "success_rate": 1.0,
+          "latency_avg_ms": 883.71,
+          "latency_p95_ms": 2151.81
+        },
+        "products_map": {
+          "requests": 110,
+          "success_rate": 1.0,
+          "latency_avg_ms": 996.66,
+          "latency_p95_ms": 3433.1
+        },
+        "product_detail": {
+          "requests": 194,
+          "success_rate": 1.0,
+          "latency_avg_ms": 821.2,
+          "latency_p95_ms": 1777.75
+        },
+        "seller_products": {
+          "requests": 39,
+          "success_rate": 1.0,
+          "latency_avg_ms": 1056.94,
+          "latency_p95_ms": 2188.92
+        },
+        "buyer_purchases": {
+          "requests": 69,
+          "success_rate": 1.0,
+          "latency_avg_ms": 917.21,
+          "latency_p95_ms": 2949.35
+        },
+        "purchase": {
+          "requests": 52,
+          "success_rate": 1.0,
+          "latency_avg_ms": 2357.64,
+          "latency_p95_ms": 5656.26
+        }
+      }
+    },
+    {
+      "concurrent_users": 100,
+      "requests": 806,
+      "elapsed_seconds": 23.024,
+      "throughput_rps": 35.01,
+      "success_rate": 1.0,
+      "latency_avg_ms": 1587.97,
+      "latency_p50_ms": 1220.02,
+      "latency_p95_ms": 4255.2,
+      "latency_p99_ms": 5745.74,
+      "statuses": {
+        "200": 806
+      },
+      "endpoints": {
+        "products_map": {
+          "requests": 122,
+          "success_rate": 1.0,
+          "latency_avg_ms": 1371.84,
+          "latency_p95_ms": 3796.55
+        },
+        "products": {
+          "requests": 307,
+          "success_rate": 1.0,
+          "latency_avg_ms": 1517.2,
+          "latency_p95_ms": 4065.83
+        },
+        "product_detail": {
+          "requests": 222,
+          "success_rate": 1.0,
+          "latency_avg_ms": 1502.92,
+          "latency_p95_ms": 4126.01
+        },
+        "seller_products": {
+          "requests": 32,
+          "success_rate": 1.0,
+          "latency_avg_ms": 1461.6,
+          "latency_p95_ms": 4822.75
+        },
+        "buyer_purchases": {
+          "requests": 72,
+          "success_rate": 1.0,
+          "latency_avg_ms": 1373.33,
+          "latency_p95_ms": 3213.93
+        },
+        "purchase": {
+          "requests": 51,
+          "success_rate": 1.0,
+          "latency_avg_ms": 3283.49,
+          "latency_p95_ms": 6315.01
+        }
+      }
+    }
+  ]
+}

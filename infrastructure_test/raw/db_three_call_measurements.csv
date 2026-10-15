@@ -1,0 +1,16 @@
+﻿action,test_no,select,insert,update,delete,total_queries,evidence
+products,1,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+products,2,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+products,3,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+product_detail,1,1,0,0,0,1,C. static execution-path trace; DB statistics unavailable
+product_detail,2,1,0,0,0,1,C. static execution-path trace; DB statistics unavailable
+product_detail,3,1,0,0,0,1,C. static execution-path trace; DB statistics unavailable
+products_map,1,1,0,0,0,1,C. static execution-path trace; DB statistics unavailable
+products_map,2,1,0,0,0,1,C. static execution-path trace; DB statistics unavailable
+products_map,3,1,0,0,0,1,C. static execution-path trace; DB statistics unavailable
+buyer_purchases,1,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+buyer_purchases,2,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+buyer_purchases,3,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+seller_products,1,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+seller_products,2,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable
+seller_products,3,2,0,0,0,2,C. static execution-path trace; DB statistics unavailable

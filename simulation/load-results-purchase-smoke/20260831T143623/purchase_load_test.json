@@ -1,0 +1,87 @@
+{
+  "executed_at_utc": "2026-08-31T05:36:23.050501+00:00",
+  "base_url": "https://ssd-be.onrender.com",
+  "endpoint": "/api/buyer/purchases",
+  "product_id": 28,
+  "requests_per_stage": 1,
+  "health_latency_ms": 583.32,
+  "stop_rules": {
+    "minimum_success_rate": 0.99,
+    "maximum_p95_ms": 3000
+  },
+  "product_before": {
+    "success": true,
+    "data": {
+      "id": 28,
+      "sellerProfileId": 4,
+      "name": "test",
+      "description": "test",
+      "businessType": "RESTAURANT",
+      "category": "SAME_DAY_INVENTORY",
+      "type": null,
+      "totalQty": 50000,
+      "qty": 50000000,
+      "price": 30000,
+      "minPrice": 22000,
+      "currentPrice": 30000,
+      "openTime": "2026-08-31T05:15:00Z",
+      "deadline": "2026-08-31T14:55:00Z",
+      "foot": null,
+      "address": "제주시 일도일동 1148-2",
+      "lat": 33.512784,
+      "lng": 126.5283034,
+      "imageUrls": [
+        "https://ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com/products/28/041a529a-e514-4d03-8bd5-4319d4051a72.png"
+      ],
+      "status": "ACTIVE",
+      "createdAt": "2026-08-31T05:23:11.343824",
+      "updatedAt": "2026-08-31T05:32:51.611024"
+    }
+  },
+  "product_after": {
+    "success": true,
+    "data": {
+      "id": 28,
+      "sellerProfileId": 4,
+      "name": "test",
+      "description": "test",
+      "businessType": "RESTAURANT",
+      "category": "SAME_DAY_INVENTORY",
+      "type": null,
+      "totalQty": 50000,
+      "qty": 49999999,
+      "price": 30000,
+      "minPrice": 22000,
+      "currentPrice": 30000,
+      "openTime": "2026-08-31T05:15:00Z",
+      "deadline": "2026-08-31T14:55:00Z",
+      "foot": null,
+      "address": "제주시 일도일동 1148-2",
+      "lat": 33.512784,
+      "lng": 126.5283034,
+      "imageUrls": [
+        "https://ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com/products/28/041a529a-e514-4d03-8bd5-4319d4051a72.png"
+      ],
+      "status": "ACTIVE",
+      "createdAt": "2026-08-31T05:23:11.343824",
+      "updatedAt": "2026-08-31T05:36:19.867612"
+    }
+  },
+  "stages": [
+    {
+      "concurrency": 1,
+      "requests": 1,
+      "elapsed_seconds": 1.1918,
+      "throughput_rps": 0.84,
+      "success_rate": 1.0,
+      "latency_avg_ms": 1191.7,
+      "latency_p50_ms": 1191.7,
+      "latency_p95_ms": 1191.7,
+      "latency_p99_ms": 1191.7,
+      "statuses": {
+        "200": 1
+      },
+      "errors": {}
+    }
+  ]
+}

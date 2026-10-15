@@ -8,3 +8,15 @@ __pycache__/
 .pytest_cache/
 .runtime/
 tools/cloudflared.exe
+simulation/results/
+simulation/load-results/
+simulation/.env.loadtest
+simulation/results-smoke/
+
+# Matplotlib font cache (created by infrastructure reports).
+.matplotlib/
+
+# Large local event histories; keep summary.json for reports.
+simulation/results*/**/events.csv
+simulation/results*/**/backtest.sqlite3
+simulation/results*/**/backtest.sqlite3-*

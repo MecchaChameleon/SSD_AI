@@ -1,0 +1,4 @@
+﻿year,monthly_sales_krw,monthly_infra_cost_krw,infra_cost_ratio_percent,infra_bep_cases,note
+1,675000,27056,4.008,37,Infrastructure-only BEP; not total business break-even
+2,2700000,27205,1.008,37,Infrastructure-only BEP; not total business break-even
+3,8100000,27604,0.341,37,Infrastructure-only BEP; not total business break-even

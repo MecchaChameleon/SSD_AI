@@ -1,0 +1,11 @@
+﻿endpoint_name,method,path,requests,successes,failures,avg_request_bytes,total_request_bytes,avg_response_bytes,total_response_bytes,avg_latency_ms,p50_latency_ms,p95_latency_ms,p99_latency_ms,max_latency_ms,status_distribution,avg_asset_urls,avg_s3_urls,average_rps,confidence
+auth_me,GET,/api/auth/me,3,3,0,0.0,0,83.0,249,162.51,165.46,168.53,168.53,168.53,"{""200"": 3}",0.0,0.0,4.242,A. direct read-only HTTP measurement
+buyer_purchases,GET,/api/buyer/purchases?page=0&size=10,3,3,0,0.0,0,3047.0,9141,164.06,164.67,170.38,170.38,170.38,"{""200"": 3}",0.0,0.0,4.207,A. direct read-only HTTP measurement
+notification_settings,GET,/api/users/me/notification-settings,3,3,0,0.0,0,157.0,471,158.53,159.08,160.11,160.11,160.11,"{""200"": 3}",0.0,0.0,4.396,A. direct read-only HTTP measurement
+notifications,GET,/api/notifications?page=0&size=10,3,3,0,0.0,0,2675.0,8025,187.48,201.04,203.24,203.24,203.24,"{""200"": 3}",0.0,0.0,3.831,A. direct read-only HTTP measurement
+product_detail,GET,/api/products/28,3,3,0,0.0,0,748.0,2244,153.8,152.71,156.47,156.47,156.47,"{""200"": 3}",1.0,1.0,4.499,A. direct read-only HTTP measurement
+products,GET,/api/products?page=0&size=20,3,3,0,0.0,0,14938.0,44814,323.75,398.54,419.22,419.22,419.22,"{""200"": 3}",20.0,1.0,2.549,A. direct read-only HTTP measurement
+products_map,GET,/api/products/map,3,3,0,0.0,0,6505.0,19515,161.66,164.07,164.07,164.07,164.07,"{""200"": 3}",0.0,0.0,4.305,A. direct read-only HTTP measurement
+seller_dashboard,GET,/api/seller/dashboard?date=2026-09-06,3,3,0,0.0,0,171.0,513,188.97,197.69,207.12,207.12,207.12,"{""200"": 3}",0.0,0.0,3.907,A. direct read-only HTTP measurement
+seller_products,GET,/api/seller/products?page=0,3,3,0,0.0,0,943.0,2829,157.61,156.69,159.92,159.92,159.92,"{""200"": 3}",1.0,1.0,4.401,A. direct read-only HTTP measurement
+seller_profile,GET,/api/seller/profile,3,3,0,0.0,0,418.0,1254,198.44,183.72,248.54,248.54,248.54,"{""200"": 3}",0.0,0.0,3.663,A. direct read-only HTTP measurement

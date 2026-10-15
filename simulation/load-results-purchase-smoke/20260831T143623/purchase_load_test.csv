@@ -1,0 +1,2 @@
+﻿concurrency,requests,elapsed_seconds,throughput_rps,success_rate,latency_avg_ms,latency_p50_ms,latency_p95_ms,latency_p99_ms
+1,1,1.1918,0.84,1.0,1191.7,1191.7,1191.7,1191.7

@@ -1,0 +1,4 @@
+﻿year,monthly_transactions,backend_requests_month,backend_requests_year,backend_outbound_gb_month,db_queries_month,db_queries_year,db_growth_gb_year_code_estimate,s3_get_month,s3_put_month,s3_download_gb_month,s3_average_storage_gb_month,s3_year_end_storage_gb,gpt_calls_month,gpt_input_tokens_month,gpt_output_tokens_month,peak_rps,usage_evidence
+1,900,90000,1080000,0.658432,150646,1807747,0.01582,66818,50,2.972311,0.013345,0.02669,9,36000,4500,0.513699,B except DB growth(C) and peak(C)
+2,3600,360000,4320000,2.633729,602582,7230989,0.063281,267273,200,11.88929,0.080071,0.133451,36,144000,18000,2.054795,B except DB growth(C) and peak(C)
+3,10800,1080000,12960000,7.901188,1807747,21692966,0.189844,801819,600,35.667869,0.293592,0.453734,108,432000,54000,6.164384,B except DB growth(C) and peak(C)

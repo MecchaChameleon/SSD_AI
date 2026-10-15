@@ -15,20 +15,42 @@ FEATURES = [
     "demand_percentile", "remaining_ratio", "inventory_change", "elapsed_ratio", "weather",
     "weekend", "peak_hour", "outdoor",
 ]
+
+# 합성 페르소나 54,623명 시뮬레이션의 시간순 60% 학습구간에서 4단계
+# seeded random search로 보정하고, 나머지 40% 홀드아웃에서 검증한 계수다.
+# 실제 구매 데이터가 쌓이면 가격탄력성과 폐기비용으로 다시 보정한다.
+RULE_WEIGHTS = {
+    "intercept": 0.10417,
+    "low_demand": 0.18882,
+    "remaining": 0.21873,
+    "sales_velocity": 0.11487,
+    "elapsed": 0.10391,
+    "weather": 0.00136,
+    "outdoor_weather": 0.14330,
+    "weekend": 0.07889,
+    "peak_hour": 0.00284,
+}
+
+
 class PricingEngine:
     def __init__(self, data_dir: Path):
         self.demand = RegionalDemandProvider(data_dir / "제주 지역별 방문객.csv")
-        self.model_version = f"{self.demand.model_version}+kma-jeju-pricing-2026.07.5"
+        self.model_version = f"{self.demand.model_version}+persona-calibrated-pricing-2026.09.1"
 
     @staticmethod
     def _discount_from_matrix(matrix: np.ndarray) -> np.ndarray:
         demand, remaining, inventory_change, elapsed, weather, weekend, peak, outdoor = matrix.T
         sales_velocity = np.clip(-inventory_change, -10.0, 10.0) / 10.0
+        w = RULE_WEIGHTS
         discount = (
-            0.08 + (1.0 - demand) * 0.12 + remaining * 0.10
-            - sales_velocity * 0.12 + elapsed * 0.15
-            + weather * (0.03 + 0.07 * outdoor)
-            - weekend * 0.025 - peak * 0.02
+            w["intercept"]
+            + (1.0 - demand) * w["low_demand"]
+            + remaining * w["remaining"]
+            - sales_velocity * w["sales_velocity"]
+            + elapsed * w["elapsed"]
+            + weather * (w["weather"] + w["outdoor_weather"] * outdoor)
+            - weekend * w["weekend"]
+            - peak * w["peak_hour"]
         )
         return np.clip(discount, 0.03, 0.65)
 

@@ -1,0 +1,132 @@
+{
+  "executed_at_utc": "2026-08-31T05:37:23.918097+00:00",
+  "base_url": "https://ssd-be.onrender.com",
+  "endpoint": "/api/buyer/purchases",
+  "product_id": 28,
+  "requests_per_stage": 50,
+  "health_latency_ms": 281.74,
+  "stop_rules": {
+    "minimum_success_rate": 0.99,
+    "maximum_p95_ms": 3000
+  },
+  "product_before": {
+    "success": true,
+    "data": {
+      "id": 28,
+      "sellerProfileId": 4,
+      "name": "test",
+      "description": "test",
+      "businessType": "RESTAURANT",
+      "category": "SAME_DAY_INVENTORY",
+      "type": null,
+      "totalQty": 50000,
+      "qty": 49999999,
+      "price": 30000,
+      "minPrice": 22000,
+      "currentPrice": 30000,
+      "openTime": "2026-08-31T05:15:00Z",
+      "deadline": "2026-08-31T14:55:00Z",
+      "foot": null,
+      "address": "제주시 일도일동 1148-2",
+      "lat": 33.512784,
+      "lng": 126.5283034,
+      "imageUrls": [
+        "https://ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com/products/28/041a529a-e514-4d03-8bd5-4319d4051a72.png"
+      ],
+      "status": "ACTIVE",
+      "createdAt": "2026-08-31T05:23:11.343824",
+      "updatedAt": "2026-08-31T05:36:19.867612"
+    }
+  },
+  "product_after": {
+    "success": true,
+    "data": {
+      "id": 28,
+      "sellerProfileId": 4,
+      "name": "test",
+      "description": "test",
+      "businessType": "RESTAURANT",
+      "category": "SAME_DAY_INVENTORY",
+      "type": null,
+      "totalQty": 50000,
+      "qty": 49999799,
+      "price": 30000,
+      "minPrice": 22000,
+      "currentPrice": 30000,
+      "openTime": "2026-08-31T05:15:00Z",
+      "deadline": "2026-08-31T14:55:00Z",
+      "foot": null,
+      "address": "제주시 일도일동 1148-2",
+      "lat": 33.512784,
+      "lng": 126.5283034,
+      "imageUrls": [
+        "https://ssd-jeju-bucket.s3.ap-northeast-2.amazonaws.com/products/28/041a529a-e514-4d03-8bd5-4319d4051a72.png"
+      ],
+      "status": "ACTIVE",
+      "createdAt": "2026-08-31T05:23:11.343824",
+      "updatedAt": "2026-08-31T05:37:21.507004"
+    }
+  },
+  "stages": [
+    {
+      "concurrency": 1,
+      "requests": 50,
+      "elapsed_seconds": 17.7248,
+      "throughput_rps": 2.82,
+      "success_rate": 1.0,
+      "latency_avg_ms": 354.45,
+      "latency_p50_ms": 376.54,
+      "latency_p95_ms": 504.68,
+      "latency_p99_ms": 591.2,
+      "statuses": {
+        "200": 50
+      },
+      "errors": {}
+    },
+    {
+      "concurrency": 3,
+      "requests": 50,
+      "elapsed_seconds": 9.1725,
+      "throughput_rps": 5.45,
+      "success_rate": 1.0,
+      "latency_avg_ms": 538.14,
+      "latency_p50_ms": 499.8,
+      "latency_p95_ms": 989.97,
+      "latency_p99_ms": 1068.95,
+      "statuses": {
+        "200": 50
+      },
+      "errors": {}
+    },
+    {
+      "concurrency": 5,
+      "requests": 50,
+      "elapsed_seconds": 8.7908,
+      "throughput_rps": 5.69,
+      "success_rate": 1.0,
+      "latency_avg_ms": 845.14,
+      "latency_p50_ms": 791.79,
+      "latency_p95_ms": 1470.51,
+      "latency_p99_ms": 2091.08,
+      "statuses": {
+        "200": 50
+      },
+      "errors": {}
+    },
+    {
+      "concurrency": 10,
+      "requests": 50,
+      "elapsed_seconds": 7.992,
+      "throughput_rps": 6.26,
+      "success_rate": 1.0,
+      "latency_avg_ms": 1501.34,
+      "latency_p50_ms": 894.31,
+      "latency_p95_ms": 6109.23,
+      "latency_p99_ms": 7116.01,
+      "statuses": {
+        "200": 50
+      },
+      "errors": {}
+    }
+  ]
+}

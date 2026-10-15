@@ -1,0 +1,7 @@
+﻿endpoint_name,select,insert,update,delete,transactions,total_queries,measurement_method,confidence
+products,2,0,0,0,0,2,Static execution-path trace; pg_stat_statements unavailable,C. code-path estimate
+product_detail,1,0,0,0,0,1,Static execution-path trace; pg_stat_statements unavailable,C. code-path estimate
+products_map,1,0,0,0,0,1,Static execution-path trace; pg_stat_statements unavailable,C. code-path estimate
+buyer_purchases,2,0,0,0,0,2,Static execution-path trace; pg_stat_statements unavailable,C. code-path estimate
+seller_products,2,0,0,0,0,2,Static execution-path trace; pg_stat_statements unavailable,C. code-path estimate
+purchase,6,2,1,0,1,9,Static execution-path trace; pg_stat_statements unavailable,C. code-path estimate

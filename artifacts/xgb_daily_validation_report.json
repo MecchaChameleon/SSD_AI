@@ -1,0 +1,288 @@
+{
+  "generated_at": "2026-09-16T07:36:47.899952+00:00",
+  "raw_path": "C:\\Users\\brant\\Desktop\\pj\\SSD_AI\\data\\raw\\jeju_daily_flow_3y.csv",
+  "data_rows": 51300,
+  "date_range": [
+    "2023-06-02",
+    "2026-05-31"
+  ],
+  "split": {
+    "train": [
+      "2023-06-02",
+      "2025-12-02",
+      39500
+    ],
+    "validation": [
+      "2025-12-03",
+      "2026-03-02",
+      6100
+    ],
+    "test": [
+      "2026-03-03",
+      "2026-05-31",
+      5700
+    ]
+  },
+  "validation_rounds": [
+    {
+      "round": 1,
+      "name": "round_1_core",
+      "description": "현재 EBM과 같은 범주·달력 피처의 XGBoost 기준모델",
+      "log_target": false,
+      "features": [
+        "region",
+        "city",
+        "gender",
+        "age_group",
+        "month",
+        "day",
+        "day_of_year",
+        "day_of_week",
+        "is_weekend",
+        "is_holiday"
+      ],
+      "params": {
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "random_state": 42,
+        "n_jobs": -1,
+        "n_estimators": 600,
+        "learning_rate": 0.05,
+        "max_depth": 6,
+        "min_child_weight": 5,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9,
+        "reg_alpha": 0.0,
+        "reg_lambda": 2.0
+      },
+      "validation_row": {
+        "mae": 1065.8676934650296,
+        "rmse": 1608.4630383007839,
+        "wape_pct": 16.92466521867062,
+        "mape_pct": 27.650587954054988,
+        "r2": 0.9209929916199546,
+        "rows": 6100
+      },
+      "validation_region_day": {
+        "mae": 2351.934708999312,
+        "rmse": 3518.739595093635,
+        "wape_pct": 14.075090160134554,
+        "mape_pct": 20.94409299071111,
+        "r2": 0.9476007472462769,
+        "rows": 2299
+      }
+    },
+    {
+      "round": 2,
+      "name": "round_2_cyclical",
+      "description": "연중·요일 주기와 장기 추세를 추가하고 깊이를 확대",
+      "log_target": false,
+      "features": [
+        "region",
+        "city",
+        "gender",
+        "age_group",
+        "month",
+        "day",
+        "day_of_year",
+        "day_of_week",
+        "is_weekend",
+        "is_holiday",
+        "month_sin",
+        "month_cos",
+        "doy_sin",
+        "doy_cos",
+        "dow_sin",
+        "dow_cos",
+        "trend_days"
+      ],
+      "params": {
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "random_state": 42,
+        "n_jobs": -1,
+        "n_estimators": 1000,
+        "learning_rate": 0.035,
+        "max_depth": 8,
+        "min_child_weight": 3,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9,
+        "reg_alpha": 0.05,
+        "reg_lambda": 3.0
+      },
+      "validation_row": {
+        "mae": 966.2877505565081,
+        "rmse": 1583.7327869710878,
+        "wape_pct": 15.34345846425429,
+        "mape_pct": 25.539437823645393,
+        "r2": 0.9234037933909429,
+        "rows": 6100
+      },
+      "validation_region_day": {
+        "mae": 2050.570296734299,
+        "rmse": 3547.6920472459487,
+        "wape_pct": 12.271582920985571,
+        "mape_pct": 19.718851195329552,
+        "r2": 0.9467349098241087,
+        "rows": 2299
+      }
+    },
+    {
+      "round": 3,
+      "name": "round_3_interactions",
+      "description": "지역×요일·지역×월·인구집단 상호작용 범주를 추가",
+      "log_target": false,
+      "features": [
+        "region",
+        "city",
+        "gender",
+        "age_group",
+        "region_dow",
+        "region_month",
+        "demographic",
+        "month",
+        "day",
+        "day_of_year",
+        "day_of_week",
+        "is_weekend",
+        "is_holiday",
+        "month_sin",
+        "month_cos",
+        "doy_sin",
+        "doy_cos",
+        "dow_sin",
+        "dow_cos",
+        "trend_days"
+      ],
+      "params": {
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "random_state": 42,
+        "n_jobs": -1,
+        "n_estimators": 1400,
+        "learning_rate": 0.025,
+        "max_depth": 7,
+        "min_child_weight": 2,
+        "subsample": 0.92,
+        "colsample_bytree": 0.95,
+        "reg_alpha": 0.1,
+        "reg_lambda": 4.0
+      },
+      "validation_row": {
+        "mae": 1075.0851941549975,
+        "rmse": 1705.4674536596099,
+        "wape_pct": 17.07102776843833,
+        "mape_pct": 30.135391193958483,
+        "r2": 0.9111760017219259,
+        "rows": 6100
+      },
+      "validation_region_day": {
+        "mae": 2250.7642489007476,
+        "rmse": 3713.3928353732745,
+        "wape_pct": 13.469638256227128,
+        "mape_pct": 23.035090874407096,
+        "r2": 0.9416430442989416,
+        "rows": 2299
+      }
+    },
+    {
+      "round": 4,
+      "name": "round_4_log_regularized",
+      "description": "큰 유동인구 값의 영향과 과적합을 줄이는 log1p 타깃·정규화 모델",
+      "log_target": true,
+      "features": [
+        "region",
+        "city",
+        "gender",
+        "age_group",
+        "region_dow",
+        "region_month",
+        "demographic",
+        "month",
+        "day",
+        "day_of_year",
+        "day_of_week",
+        "is_weekend",
+        "is_holiday",
+        "month_sin",
+        "month_cos",
+        "doy_sin",
+        "doy_cos",
+        "dow_sin",
+        "dow_cos",
+        "trend_days"
+      ],
+      "params": {
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "random_state": 42,
+        "n_jobs": -1,
+        "n_estimators": 1600,
+        "learning_rate": 0.025,
+        "max_depth": 6,
+        "min_child_weight": 4,
+        "subsample": 0.88,
+        "colsample_bytree": 0.9,
+        "reg_alpha": 0.2,
+        "reg_lambda": 6.0
+      },
+      "validation_row": {
+        "mae": 975.0636284055867,
+        "rmse": 1622.6157923535757,
+        "wape_pct": 15.482808587638505,
+        "mape_pct": 20.619777265778243,
+        "r2": 0.9195965204957175,
+        "rows": 6100
+      },
+      "validation_region_day": {
+        "mae": 2014.7506721947907,
+        "rmse": 3208.3724407839322,
+        "wape_pct": 12.057221339022158,
+        "mape_pct": 15.511097014631394,
+        "r2": 0.9564367379985816,
+        "rows": 2299
+      }
+    }
+  ],
+  "selected_round": "round_4_log_regularized",
+  "test_unit": "region_day_after_row_level_prediction",
+  "test_metrics": {
+    "previous_month": {
+      "mae": 3328.1136433799097,
+      "rmse": 5817.060750856029,
+      "wape_pct": 24.825806985274333,
+      "mape_pct": 30.582827339581176,
+      "r2": 0.7847794616829503,
+      "rows": 2465
+    },
+    "same_weekday": {
+      "mae": 2741.227106389349,
+      "rmse": 5015.322502716622,
+      "wape_pct": 20.447972136225417,
+      "mape_pct": 24.943899251388103,
+      "r2": 0.84001684973481,
+      "rows": 2465
+    },
+    "calendar_only": {
+      "mae": 7780.396549743281,
+      "rmse": 12108.524976850846,
+      "wape_pct": 58.03726786704926,
+      "mape_pct": 100.90474846931603,
+      "r2": 0.06747818900457814,
+      "rows": 2465
+    },
+    "xgb": {
+      "mae": 2284.4892964221885,
+      "rmse": 3792.8486572606066,
+      "wape_pct": 17.040971676467596,
+      "mape_pct": 21.95472186731759,
+      "r2": 0.9085028551784693,
+      "rows": 2465
+    }
+  },
+  "public_feature_effect": {
+    "comparison": "calendar_only_ablation_vs_full_xgb",
+    "mae_reduction_pct": 70.63788096382353,
+    "wape_reduction_pct": 70.63788096382353
+  }
+}

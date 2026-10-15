@@ -1,0 +1,178 @@
+{
+  "method": "four_stage_seeded_random_search_on_synthetic_persona_training_split",
+  "selection_objective": "net_profit_after_waste + 0.10*revenue + 0.05*sell_through*revenue",
+  "seed": 20260916,
+  "scenario_seed": 42,
+  "split_method": "chronological_60_train_40_evaluation",
+  "training_scenarios": 1080,
+  "evaluation_scenarios": 720,
+  "rounds": [
+    {
+      "round": 1,
+      "candidate_count": 70,
+      "radius": 1.0,
+      "selected_weights": {
+        "intercept": 0.11692,
+        "low_demand": 0.19954,
+        "remaining": 0.19543,
+        "sales_velocity": 0.10133,
+        "elapsed": 0.10668,
+        "weather": 0.0092,
+        "outdoor_weather": 0.10505,
+        "weekend": 0.06452,
+        "peak_hour": 0.00711
+      },
+      "training_metrics": {
+        "score": 930213804.9888253,
+        "revenue": 1238892100,
+        "gross_profit": 874383500,
+        "unsold_loss": 115172800,
+        "net_profit_after_waste": 759210700,
+        "bookings": 21780,
+        "offers": 30263,
+        "conversion_rate": 0.7196907114297988,
+        "sell_through_rate": 0.7605810867439586,
+        "avg_price": 56882.09825528007
+      }
+    },
+    {
+      "round": 2,
+      "candidate_count": 70,
+      "radius": 0.3,
+      "selected_weights": {
+        "intercept": 0.11144,
+        "low_demand": 0.19387,
+        "remaining": 0.21152,
+        "sales_velocity": 0.1229,
+        "elapsed": 0.12711,
+        "weather": 0.00625,
+        "outdoor_weather": 0.12185,
+        "weekend": 0.0738,
+        "peak_hour": 0.01312
+      },
+      "training_metrics": {
+        "score": 931602607.2951878,
+        "revenue": 1240536900,
+        "gross_profit": 879792300,
+        "unsold_loss": 118936800,
+        "net_profit_after_waste": 760855500,
+        "bookings": 21557,
+        "offers": 30405,
+        "conversion_rate": 0.708995231047525,
+        "sell_through_rate": 0.752793686269032,
+        "avg_price": 57546.8246973141
+      }
+    },
+    {
+      "round": 3,
+      "candidate_count": 70,
+      "radius": 0.15,
+      "selected_weights": {
+        "intercept": 0.09976,
+        "low_demand": 0.1821,
+        "remaining": 0.2199,
+        "sales_velocity": 0.11158,
+        "elapsed": 0.11633,
+        "weather": 0.00672,
+        "outdoor_weather": 0.14051,
+        "weekend": 0.07685,
+        "peak_hour": 0.00322
+      },
+      "training_metrics": {
+        "score": 934222357.3753318,
+        "revenue": 1242866400,
+        "gross_profit": 882183500,
+        "unsold_loss": 118998500,
+        "net_profit_after_waste": 763185000,
+        "bookings": 21543,
+        "offers": 30428,
+        "conversion_rate": 0.7079992112527935,
+        "sell_through_rate": 0.7523047911719514,
+        "avg_price": 57692.354825233255
+      }
+    },
+    {
+      "round": 4,
+      "candidate_count": 70,
+      "radius": 0.07,
+      "selected_weights": {
+        "intercept": 0.10417,
+        "low_demand": 0.18882,
+        "remaining": 0.21873,
+        "sales_velocity": 0.11487,
+        "elapsed": 0.10391,
+        "weather": 0.00136,
+        "outdoor_weather": 0.1433,
+        "weekend": 0.07889,
+        "peak_hour": 0.00284
+      },
+      "training_metrics": {
+        "score": 934309033.4474089,
+        "revenue": 1242894900,
+        "gross_profit": 881744700,
+        "unsold_loss": 118531200,
+        "net_profit_after_waste": 763213500,
+        "bookings": 21568,
+        "offers": 30425,
+        "conversion_rate": 0.7088907148726377,
+        "sell_through_rate": 0.7531778181310239,
+        "avg_price": 57626.80359792285
+      }
+    }
+  ],
+  "current_weights": {
+    "intercept": 0.08,
+    "low_demand": 0.12,
+    "remaining": 0.1,
+    "sales_velocity": 0.12,
+    "elapsed": 0.15,
+    "weather": 0.03,
+    "outdoor_weather": 0.07,
+    "weekend": 0.025,
+    "peak_hour": 0.02
+  },
+  "calibrated_weights": {
+    "intercept": 0.10417,
+    "low_demand": 0.18882,
+    "remaining": 0.21873,
+    "sales_velocity": 0.11487,
+    "elapsed": 0.10391,
+    "weather": 0.00136,
+    "outdoor_weather": 0.1433,
+    "weekend": 0.07889,
+    "peak_hour": 0.00284
+  },
+  "holdout": {
+    "current": {
+      "score": 616504290.6479051,
+      "revenue": 826721900,
+      "gross_profit": 608570300,
+      "unsold_loss": 102804900,
+      "net_profit_after_waste": 505765400,
+      "bookings": 12932,
+      "offers": 20778,
+      "conversion_rate": 0.6223890653575898,
+      "sell_through_rate": 0.6789877139556862,
+      "avg_price": 63928.38694710795
+    },
+    "calibrated": {
+      "score": 636749633.5545522,
+      "revenue": 841724800,
+      "gross_profit": 598959700,
+      "unsold_loss": 78191400,
+      "net_profit_after_waste": 520768300,
+      "bookings": 14395,
+      "offers": 20411,
+      "conversion_rate": 0.7052569692812699,
+      "sell_through_rate": 0.7558017431481676,
+      "avg_price": 58473.41437999305
+    },
+    "net_profit_change_pct": 2.966375319466308,
+    "revenue_change_pct": 1.8147456841290932,
+    "sell_through_change_pct": 11.313021961026903
+  },
+  "limitations": [
+    "Synthetic persona calibration does not prove real customer price elasticity.",
+    "Recalibrate with observed offer, purchase, margin, and waste outcomes before automated rollout."
+  ]
+}

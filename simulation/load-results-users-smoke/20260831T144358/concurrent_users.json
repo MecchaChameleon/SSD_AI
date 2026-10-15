@@ -1,0 +1,59 @@
+{
+  "executed_at_utc": "2026-08-31T05:43:58.029951+00:00",
+  "base_url": "https://ssd-be.onrender.com",
+  "scenario": "read_only",
+  "purchase_ratio": 0.0,
+  "duration_seconds_per_stage": 5.0,
+  "think_time_seconds": [
+    0.5,
+    1.5
+  ],
+  "stop_rules": {
+    "minimum_success_rate": 0.99,
+    "maximum_p95_ms": 3000
+  },
+  "recovery_health_status": 200,
+  "recovery_health_latency_ms": 158.2,
+  "stages": [
+    {
+      "concurrent_users": 3,
+      "requests": 14,
+      "elapsed_seconds": 6.428,
+      "throughput_rps": 2.18,
+      "success_rate": 1.0,
+      "latency_avg_ms": 192.97,
+      "latency_p50_ms": 164.28,
+      "latency_p95_ms": 441.34,
+      "latency_p99_ms": 441.34,
+      "statuses": {
+        "200": 14
+      },
+      "endpoints": {
+        "product_detail": {
+          "requests": 6,
+          "success_rate": 1.0,
+          "latency_avg_ms": 227.98,
+          "latency_p95_ms": 441.34
+        },
+        "products": {
+          "requests": 6,
+          "success_rate": 1.0,
+          "latency_avg_ms": 165.59,
+          "latency_p95_ms": 177.68
+        },
+        "seller_products": {
+          "requests": 1,
+          "success_rate": 1.0,
+          "latency_avg_ms": 179.67,
+          "latency_p95_ms": 179.67
+        },
+        "products_map": {
+          "requests": 1,
+          "success_rate": 1.0,
+          "latency_avg_ms": 160.45,
+          "latency_p95_ms": 160.45
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+﻿timestamp_utc,endpoint_or_feature,triggering_user_action,actual_gpt_calls,simulated_gpt_calls_per_action,estimated_input_chars_per_call,estimated_input_tokens_per_call,estimated_output_tokens_per_call,cache,max_output_tokens_in_code,confidence
+2026-09-05T17:37:05.503208+00:00,/api/buyer/ai-recommendations,구매자 AI 상품 추천 실행,0,1,15999,4000,500,none,not configured,B/C. code path + measured product payload proxy + token approximation
